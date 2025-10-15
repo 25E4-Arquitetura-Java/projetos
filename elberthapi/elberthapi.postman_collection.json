@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "2d7c1b13-aa59-4a96-8169-aec5f0be3b5b",
+		"name": "elberthapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31614652"
+	},
+	"item": [
+		{
+			"name": "vendedores",
+			"item": [
+				{
+					"name": "obterLista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"nome\": \"Elberth Moraes\",\r\n        \"email\": \"elberth.moraes@vendedor.com.br\",\r\n        \"cpf\": \"1230981230989\",\r\n        \"telefone\": \"(21) 996016255\",\r\n        \"matricula\": 9999,\r\n        \"salario\": 2000.73,\r\n        \"ativo\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
