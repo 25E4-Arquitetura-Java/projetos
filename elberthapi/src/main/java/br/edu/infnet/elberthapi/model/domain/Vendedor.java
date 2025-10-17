@@ -1,64 +1,24 @@
 package br.edu.infnet.elberthapi.model.domain;
 
-public class Vendedor {
-	
-	private Integer id;
+public class Vendedor extends Pessoa {
 
-	private String nome;
-	private String email;
-	private String cpf;
-	private String telefone;
 	private int matricula;
 	private double salario;
 	private boolean ativo;
+	private Endereco endereco;
 	
 	@Override
 	public String toString() {
 	    return String.format(
-	        "%5d | Nome: %-50s | Email: %-50s | CPF: %s | Telefone: %s | Matrícula: %05d | Salário: R$ %8.2f | Ativo: %-3s",
-	        id,
-	        nome,
-	        email,
-	        cpf,
-	        telefone,
+	        "%s | Matrícula: %05d | Salário: R$ %8.2f | Ativo: %-3s | Endereco: %s",
+	        super.toString(),
 	        matricula,
 	        salario,
-	        ativo ? "Sim" : "Não"
+	        ativo ? "Sim" : "Não",
+	        endereco.getCep()
 	    );
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
 	public int getMatricula() {
 		return matricula;
 	}
@@ -76,5 +36,11 @@ public class Vendedor {
 	}
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 }

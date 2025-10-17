@@ -8,4 +8,5 @@ public interface CrudService<T, ID> {
 	List<T> obterLista();
 	T alterar(ID id, T entidade);
 	void excluir(ID id);
+	T obterPorId(ID id);
 }

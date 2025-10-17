@@ -8,6 +8,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import br.edu.infnet.elberthapi.model.domain.Endereco;
 import br.edu.infnet.elberthapi.model.domain.Vendedor;
 import br.edu.infnet.elberthapi.model.domain.service.VendedorService;
 
@@ -33,6 +34,14 @@ public class VendedorLoader implements ApplicationRunner {
 
 			campos = linha.split(";");
 			
+			Endereco endereco = new Endereco();
+			endereco.setCep(campos[7]);
+			endereco.setBairro(null);
+			endereco.setEstado(null);
+			endereco.setLocalidade(null);
+			endereco.setLogradouro(null);
+			endereco.setUf(null);
+			
 			Vendedor vendedor = new Vendedor();
 			vendedor.setNome(campos[0]);
 			vendedor.setEmail(campos[1]);
@@ -41,6 +50,7 @@ public class VendedorLoader implements ApplicationRunner {
 			vendedor.setMatricula(Integer.valueOf(campos[4]));
 			vendedor.setSalario(Double.valueOf(campos[5]));
 			vendedor.setAtivo(Boolean.valueOf(campos[6]));
+			vendedor.setEndereco(endereco);
 			
 			vendedorService.incluir(vendedor);
 			
