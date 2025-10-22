@@ -8,17 +8,19 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import br.edu.infnet.elberthapi.model.domain.Endereco;
+import br.edu.infnet.elberthapi.clients.ViaCepFeignClient;
 import br.edu.infnet.elberthapi.model.domain.Vendedor;
-import br.edu.infnet.elberthapi.model.domain.service.VendedorService;
+import br.edu.infnet.elberthapi.model.service.VendedorService;
 
 @Component
 public class VendedorLoader implements ApplicationRunner {
 	
 	private final VendedorService vendedorService;
+	private final ViaCepFeignClient cepFeignClient;
 	
-	public VendedorLoader(VendedorService vendedorService) {
+	public VendedorLoader(VendedorService vendedorService, ViaCepFeignClient cepFeignClient) {
 		this.vendedorService = vendedorService;
+		this.cepFeignClient = cepFeignClient;
 	}
 	
 	@Override
@@ -33,15 +35,7 @@ public class VendedorLoader implements ApplicationRunner {
 		while(linha != null) {
 
 			campos = linha.split(";");
-			
-			Endereco endereco = new Endereco();
-			endereco.setCep(campos[7]);
-			endereco.setBairro(null);
-			endereco.setEstado(null);
-			endereco.setLocalidade(null);
-			endereco.setLogradouro(null);
-			endereco.setUf(null);
-			
+
 			Vendedor vendedor = new Vendedor();
 			vendedor.setNome(campos[0]);
 			vendedor.setEmail(campos[1]);
@@ -50,10 +44,10 @@ public class VendedorLoader implements ApplicationRunner {
 			vendedor.setMatricula(Integer.valueOf(campos[4]));
 			vendedor.setSalario(Double.valueOf(campos[5]));
 			vendedor.setAtivo(Boolean.valueOf(campos[6]));
-			vendedor.setEndereco(endereco);
+			vendedor.setEndereco(cepFeignClient.findByCep(campos[7]));
 			
 			vendedorService.incluir(vendedor);
-			
+						
 			linha = leitura.readLine();
 		}
 

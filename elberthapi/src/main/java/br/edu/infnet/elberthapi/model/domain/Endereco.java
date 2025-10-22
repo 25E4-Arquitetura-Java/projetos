@@ -11,8 +11,15 @@ public class Endereco {
 	
 	@Override
 	public String toString() {
-		// TODO Não esquecer de atualizar o toString de endereço
-		return super.toString();
+		return String.format(
+	            "Endereço [CEP: %s | Logradouro: %s | Bairro: %s | Localidade: %s | UF: %s | Estado: %s]",
+	            cep != null ? cep : "N/A",
+	            logradouro != null ? logradouro : "N/A",
+	            bairro != null ? bairro : "N/A",
+	            localidade != null ? localidade : "N/A",
+	            uf != null ? uf : "N/A",
+	            estado != null ? estado : "N/A"
+	        );
 	}
 
 	public String getCep() {

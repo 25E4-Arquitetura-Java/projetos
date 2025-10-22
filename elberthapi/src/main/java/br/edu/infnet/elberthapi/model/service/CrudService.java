@@ -1,4 +1,4 @@
-package br.edu.infnet.elberthapi.interfaces;
+package br.edu.infnet.elberthapi.model.service;
 
 import java.util.List;
 

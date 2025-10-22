@@ -1,10 +1,16 @@
 package br.edu.infnet.elberthapi.model.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
+
+@Entity
 public class Vendedor extends Pessoa {
 
 	private int matricula;
 	private double salario;
 	private boolean ativo;
+
+	@Transient
 	private Endereco endereco;
 	
 	@Override
@@ -15,7 +21,7 @@ public class Vendedor extends Pessoa {
 	        matricula,
 	        salario,
 	        ativo ? "Sim" : "Não",
-	        endereco.getCep()
+	        endereco
 	    );
 	}
 

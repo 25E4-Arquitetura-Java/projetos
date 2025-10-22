@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.elberthapi.model.domain.Vendedor;
-import br.edu.infnet.elberthapi.model.domain.service.VendedorService;
+import br.edu.infnet.elberthapi.model.service.VendedorService;
 
 @RestController
 @RequestMapping("/api/vendedores")
