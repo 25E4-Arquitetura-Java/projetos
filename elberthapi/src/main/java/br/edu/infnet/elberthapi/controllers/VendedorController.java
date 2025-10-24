@@ -2,6 +2,8 @@ package br.edu.infnet.elberthapi.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.elberthapi.model.domain.Vendedor;
 import br.edu.infnet.elberthapi.model.service.VendedorService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/vendedores")
@@ -26,45 +29,53 @@ public class VendedorController {
 	}
 
 	@PostMapping
-	public Vendedor incluir(@RequestBody Vendedor vendedor) {
+	public ResponseEntity<Vendedor> incluir(@Valid @RequestBody Vendedor vendedor) {
 		
 		Vendedor vendedorIncluido = vendedorService.incluir(vendedor);
 
-		return vendedorIncluido;
+		return ResponseEntity.status(HttpStatus.CREATED).body(vendedorIncluido);
 	}
 
 	@PutMapping("/{id}")
-	public Vendedor alterar(@PathVariable Integer id, @RequestBody Vendedor vendedor) {
+	public ResponseEntity<Vendedor> alterar(@PathVariable Integer id, @RequestBody Vendedor vendedor) {
 
 		Vendedor vendedorAlterado = vendedorService.alterar(id, vendedor);
 		
-		return vendedorAlterado;
+		return ResponseEntity.ok(vendedorAlterado);
 	}
 
 	@DeleteMapping("/{id}")
-	public void excluir(@PathVariable Integer id) {
+	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
 		vendedorService.excluir(id);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping
-	public List<Vendedor> obterLista() {
+	public ResponseEntity<List<Vendedor>> obterLista() {
 		
-		return vendedorService.obterLista();
+		List<Vendedor> lista = vendedorService.obterLista();
+		
+		if(lista.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		
+		return ResponseEntity.ok(lista);
 	}
 	
 	@GetMapping("/{id}")
-	public Vendedor obterPorId(@PathVariable Integer id) {
+	public ResponseEntity<Vendedor> obterPorId(@PathVariable Integer id) {
 		
 		Vendedor vendedorObtido = vendedorService.obterPorId(id);
 		
-		return vendedorObtido;
+		return ResponseEntity.ok(vendedorObtido);
 	}
 	
 	@PatchMapping("/{id}/inativar")
-	public Vendedor inativar(@PathVariable Integer id) {
+	public ResponseEntity<Vendedor> inativar(@PathVariable Integer id) {
 		
 		Vendedor vendedorInativado = vendedorService.inativar(id);
 		
-		return vendedorInativado;
+		return ResponseEntity.ok(vendedorInativado);
 	}
 }

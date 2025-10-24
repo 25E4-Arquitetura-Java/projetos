@@ -26,10 +26,6 @@ public class CompradorService implements CrudService<Comprador, Integer> {
         if(comprador.getNome() == null || comprador.getNome().trim().isEmpty()) {
             throw new CompradorInvalidoException("O nome do comprador é uma informação obrigatória!!!");
         }
-
-        if(comprador.getId() != null && comprador.getId() > 0) {
-            throw new IllegalArgumentException("O novo comprador não pode ter um ID preenchido durante a inclusão/alteração (use o método alterar com um ID válido)!!");
-        }
     }
     
     @Override
@@ -37,7 +33,12 @@ public class CompradorService implements CrudService<Comprador, Integer> {
 		
 		validar(comprador);
 		
-		comprador.setId(nextId.getAndIncrement());
+
+        if(comprador.getId() != null && comprador.getId() > 0) {
+            throw new IllegalArgumentException("O novo comprador não pode ter um ID preenchido durante a inclusão/alteração (use o método alterar com um ID válido)!!");
+        }
+
+        comprador.setId(nextId.getAndIncrement());
 		mapa.put(comprador.getId(), comprador);
 
 		return comprador;
@@ -53,6 +54,8 @@ public class CompradorService implements CrudService<Comprador, Integer> {
     public Comprador alterar(Integer id, Comprador comprador) {
 				
 		validar(comprador);
+		
+		comprador.setId(id);
 		
 		mapa.put(comprador.getId(), comprador);
 		
