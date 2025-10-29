@@ -12,6 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import br.edu.infnet.elberthapi.exceptions.ProdutoInvalidoException;
+import br.edu.infnet.elberthapi.exceptions.ProdutoNaoEncontratoException;
 import br.edu.infnet.elberthapi.exceptions.VendedorInvalidoException;
 import br.edu.infnet.elberthapi.exceptions.VendedorNaoEncontratoException;
 
@@ -52,6 +54,30 @@ public class GlobalExceptionHandler {
 		mapa.put("status", HttpStatus.NOT_FOUND.toString());
 		mapa.put("error", e.getMessage());
 		mapa.put("detail", "O vendedor solicitado não foi encontrado na base de dados!");
+		
+		return new ResponseEntity<Map<String,String>>(mapa, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(ProdutoInvalidoException.class) // Adicionado
+	public ResponseEntity<Map<String, String>> handleProdutoInvalidoException(ProdutoInvalidoException e){
+		Map<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("timestamp", LocalDateTime.now().toString());
+		mapa.put("status", HttpStatus.BAD_REQUEST.toString());
+		mapa.put("error", e.getMessage());
+		mapa.put("detail", "Verifique os dados fornecidos para o produto!");
+		
+		return new ResponseEntity<Map<String,String>>(mapa, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ProdutoNaoEncontratoException.class) // Adicionado
+	public ResponseEntity<Map<String, String>> handleProdutoNaoEncontratoException(ProdutoNaoEncontratoException e){
+		Map<String, String> mapa = new HashMap<String, String>();
+
+		mapa.put("timestamp", LocalDateTime.now().toString());
+		mapa.put("status", HttpStatus.NOT_FOUND.toString());
+		mapa.put("error", e.getMessage());
+		mapa.put("detail", "O produto solicitado não foi encontrado na base de dados!");
 		
 		return new ResponseEntity<Map<String,String>>(mapa, HttpStatus.NOT_FOUND);
 	}

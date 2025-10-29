@@ -85,4 +85,12 @@ public class VendedorService implements CrudService<Vendedor, Integer> {
 
 		return vendedorRepository.save(vendedor);
 	}
+
+	public Vendedor obterPorCpf(String cpf) {
+		if(cpf == null || cpf.trim().isEmpty()) {
+			throw new IllegalArgumentException("O CPF utilizado na busca do vendedor não pode ser nulo ou vazio.");
+		}
+		
+		return vendedorRepository.findByCpf(cpf).orElseThrow(() -> new VendedorNaoEncontratoException("O vendedor com o CPF ["+cpf+"] não foi encontrado!"));
+	}
 }
